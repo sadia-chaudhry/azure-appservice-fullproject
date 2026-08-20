@@ -57,7 +57,6 @@ az login
 ![Screenshot 3](screenshots/screenshot-3.png)
 ![Screenshot 4](screenshots/screenshot-4.png)
 ![Screenshot 5](screenshots/screenshot-5.png)
-*(add screenshots showing: production page before swap, staging page before swap, production page after swap, and instance count scaling up)*
 
 ## Testing Autoscale (with real load, not just config)
 
