@@ -56,9 +56,7 @@ production and staging stages
 ![Screenshot 1](screenshots/screenshot-1.png)
 ![Screenshot 2](screenshots/screenshot-2.png)
 ![Screenshot 3](screenshots/screenshot-3.png)
-put the load through hey and check the instances - it got increased to the limit i set in autoscale rule
-![Screenshot 4](screenshots/screenshot-4.png)
-![Screenshot 5](screenshots/screenshot-5.png)
+
 
 ## Testing Autoscale (with real load, not just config)
 
@@ -75,6 +73,9 @@ az webapp list-instances --resource-group az104-appservice-rg --name sadia-az104
 ```
 
 Observed result: instance count went from 1 to 2  after roughly 6-7  minutes of sustained load, confirming the `CpuPercentage > 70 avg 5m` rule genuinely triggered a scale-out, not just a saved configuration.
+
+![Screenshot 4](screenshots/screenshot-4.png)
+![Screenshot 5](screenshots/screenshot-5.png)
 
 ## Troubleshooting / Lessons Learned
 
