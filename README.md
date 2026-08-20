@@ -97,6 +97,4 @@ Observed result: instance count went from 1 to 2  after roughly 6-7  minutes of 
 - Swap the staging slot into production
 - Configure and test autoscaling of an Azure web app
 
-## Author
-
-Sadia — built while studying for AZ-104, Microsoft Azure Administrator Associate.
+By Sadia Chaudhry
