@@ -52,9 +52,11 @@ az login
 ```
 
 ## Screenshots
+production and staging stages
 ![Screenshot 1](screenshots/screenshot-1.png)
 ![Screenshot 2](screenshots/screenshot-2.png)
 ![Screenshot 3](screenshots/screenshot-3.png)
+put the load through hey and check the instances - it got increased to the limit i set in autoscale rule
 ![Screenshot 4](screenshots/screenshot-4.png)
 ![Screenshot 5](screenshots/screenshot-5.png)
 
