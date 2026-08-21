@@ -12,6 +12,8 @@ This project demonstrates the core App Service skills covered in the AZ-104 exam
 - Deploying different code to the staging slot
 - Performing a slot swap (staging → production) with zero downtime
 - Configuring and genuinely testing autoscaling (not just configuring it)
+- Configure backup for an App Service
+- Configure networking settings for an App Service (IP access restrictions)
 
 ## Architecture
                     Internet
@@ -63,6 +65,17 @@ az login
 
 Rather than only configuring an autoscale rule and documenting the settings, this project actually triggers a real scale-out event using `hey`, a load-generation tool, to send sustained concurrent traffic at the production URL:
 
+## Backup & Networking
+
+**Backup:** configured a Standard-tier App Service to back up to an Azure Storage container using a time-limited SAS URL, then triggered and verified a real manual backup (`az webapp config backup create` / `... list`).
+
+**Networking:** added an IP-based access restriction rule allowing only a single trusted IP address, with the default action for all other traffic set to Deny (`az webapp config access-restriction add` + `ipSecurityRestrictionsDefaultAction=Deny`).
+
+![Backup list showing Succeeded](screenshots/screenshot-6.png)
+![Access restriction configuration (IP redacted)](screenshots/screenshot-7.png)
+
+
+
 ```bash
 hey -z 8m -c 200 https://sadia-az104-webapp.azurewebsites.net/
 ```
@@ -79,7 +92,8 @@ Observed result: instance count went from 1 to 2  after roughly 6-7  minutes of 
 
 - **Runtime version drift:** the tutorial-standard `NODE:20-lts` runtime string failed with "Linux Runtime not supported," since Node 20 has since been deprecated on App Service. Used `az webapp list-runtimes --os-type linux` to find the current supported versions and switched to `NODE|24-lts` (note the pipe separator instead of colon, which Azure's newer CLI output uses). Good reminder that Azure's supported runtime list changes over time, always verify against the live list rather than trusting older tutorials.
 - **Standard tier requirement:** deployment slots and autoscaling are not available on Free or Basic App Service plan tiers, Standard (S1) or higher is required, a real cost/feature trade-off worth knowing for the exam.
-
+- **CLI parameter inconsistency:** `az webapp config backup create` unexpectedly requires `--webapp-name` instead of the `--name` shown in Microsoft's own documentation example, a small but real inconsistency across `az webapp` subcommands worth knowing before copy-pasting docs blindly.
+- **IPv6 vs IPv4:** `curl ifconfig.me` returned an IPv6 address by default on this network, which needs `/128` CIDR notation instead of `/32`. Used `curl -4` to force an IPv4 address for simplicity.
 ## Cleanup
 
 ```bash
