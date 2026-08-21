@@ -54,12 +54,11 @@ az login
 ```
 
 ## Screenshots
+production and staging stages
 ![Screenshot 1](screenshots/screenshot-1.png)
 ![Screenshot 2](screenshots/screenshot-2.png)
 ![Screenshot 3](screenshots/screenshot-3.png)
-![Screenshot 4](screenshots/screenshot-4.png)
-![Screenshot 5](screenshots/screenshot-5.png)
-*(add screenshots showing: production page before swap, staging page before swap, production page after swap, and instance count scaling up)*
+
 
 ## Testing Autoscale (with real load, not just config)
 
@@ -88,6 +87,9 @@ az webapp list-instances --resource-group az104-appservice-rg --name sadia-az104
 
 Observed result: instance count went from 1 to 2  after roughly 6-7  minutes of sustained load, confirming the `CpuPercentage > 70 avg 5m` rule genuinely triggered a scale-out, not just a saved configuration.
 
+![Screenshot 4](screenshots/screenshot-4.png)
+![Screenshot 5](screenshots/screenshot-5.png)
+
 ## Troubleshooting / Lessons Learned
 
 - **Runtime version drift:** the tutorial-standard `NODE:20-lts` runtime string failed with "Linux Runtime not supported," since Node 20 has since been deprecated on App Service. Used `az webapp list-runtimes --os-type linux` to find the current supported versions and switched to `NODE|24-lts` (note the pipe separator instead of colon, which Azure's newer CLI output uses). Good reminder that Azure's supported runtime list changes over time, always verify against the live list rather than trusting older tutorials.
@@ -109,6 +111,4 @@ Observed result: instance count went from 1 to 2  after roughly 6-7  minutes of 
 - Swap the staging slot into production
 - Configure and test autoscaling of an Azure web app
 
-## Author
-
-Sadia — built while studying for AZ-104, Microsoft Azure Administrator Associate.
+By Sadia Chaudhry
